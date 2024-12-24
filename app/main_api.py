@@ -35,7 +35,9 @@ async def create_item(request: ReqPredict):
         logger.info(request)
         data = pred_optimal_route(request.id_kurir)
         logger.info(data)
-        return data
+        return {"resp_msg": "predict route berhasil",
+                     "resp_data":  data
+                     }
     except Exception as e:
         logger.error(str(e))
         return JSONResponse(
