@@ -5,8 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    # command: sh -c "uvicorn main:app --host 0.0.0.0 --port 8004 --reload"  # ini untuk api
-    command: sh -c "python3 main.py"
+    command: sh -c "uvicorn main_api:app --host 0.0.0.0 --port 8004 --reload" # ini untuk api
+    # command: sh -c "python3 main.py"
     image: routeoptimization:latest
     container_name: routeoptimization
     ports:
