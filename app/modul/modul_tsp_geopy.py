@@ -5,6 +5,8 @@ from geopy.distance import distance
 import requests
 from tqdm import tqdm
 
+
+
 # Function to extract courier id and date
 def get_id_kurir_and_date(df: pd.DataFrame):
     df['id_kurir'] = df['pod__photo'].str.extract(r'camera\.photoDeliveryProcessImage\.(\d+)')

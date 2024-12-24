@@ -1,0 +1,6 @@
+numpy==1.26.4
+pandas==2.2.1
+geopy==2.4.1
+ortools==9.11.4210
+requests==2.31.0
+tqdm==4.66.2
