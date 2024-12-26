@@ -29,13 +29,13 @@ class ReqPredict(BaseModel):
     id_kurir: str
 
 
-@app.post("/api/v1/predict-route")
-async def create_item(request: ReqPredict):
+@app.get("/api/v1/predict-route/{id_kurir}")
+async def create_item(id_kurir: str):
     try:
-        logger.info(request)
-        data = pred_optimal_route(request.id_kurir)
+        logger.info(id_kurir)
+        data = pred_optimal_route(id_kurir)
         logger.info(data)
-        return {"resp_msg": "predict route berhasil",
+        return {"resp_msg": "Predict route berhasil!",
                      "resp_data":  data
                      }
     except Exception as e:
