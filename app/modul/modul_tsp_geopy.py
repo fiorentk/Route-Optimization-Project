@@ -5,8 +5,6 @@ from geopy.distance import distance
 import requests
 from tqdm import tqdm
 
-
-
 # Function to extract courier id and date
 def get_id_kurir_and_date(df: pd.DataFrame):
     df['id_kurir'] = df['pod__photo'].str.extract(r'camera\.photoDeliveryProcessImage\.(\d+)')
@@ -147,13 +145,18 @@ def get_optimal_route_with_codes(df, km_per_liter_fuel = 40, fuel_price_per_lite
         # Solve TSP for the optimal route
         optimal_route_indices, optimal_distance, optimal_connote_codes = solve_tsp(df.loc[i, 'distance_matrix_per_kurir'])
         
-        # Get original route and calculate total distance
+                # Get original route and calculate total distance
         original_route_indices = list(range(len(df.loc[i, 'distance_matrix_per_kurir'])))  # Original order of indices
         original_connote_codes = [
-            df.loc[i, 'distance_matrix_per_kurir'][index][index]['connote_code_i'] 
+            df.loc[i, 'distance_matrix_per_kurir'][index][index]['connote_code_i']
             for index in original_route_indices
         ]  # Get connote codes for original route
-        
+
+        # Add kantor as the last point to form a closed loop
+        original_route_indices.append(0)  # 0 is the index of kantor (first entry in DataFrame)
+        original_connote_codes.append(original_connote_codes[0])  # Append kantor's connote code
+
+        # Calculate total distance for the original route
         original_distance = 0
         for j in range(len(original_route_indices) - 1):
             original_distance += df.loc[i, 'distance_matrix_per_kurir'][original_route_indices[j]][original_route_indices[j + 1]]['distance']
